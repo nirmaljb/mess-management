@@ -83,8 +83,8 @@
                                 <button onclick="filterPayments('completed')" class="px-6 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm">
                                     Completed
                                 </button>
-                                <button onclick="filterPayments('pending')" class="px-6 py-2.5 bg-yellow-400 text-white rounded hover:bg-yellow-500 shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm">
-                                    Pending
+                                <button onclick="filterPayments('failed')" class="px-6 py-2.5 bg-red-600 text-white rounded hover:bg-yellow-500 shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm">
+                                    Failed
                                 </button>
                             </div>
                         </div>
@@ -136,6 +136,8 @@
             let filteredPayments = allPayments;
             if (status !== 'all') {
                 filteredPayments = allPayments.filter(payment => payment.payment_status === status);
+            }else if(status === 'pending' || status === 'failed') {
+                filteredPayments = allPayments.filter(payment => payment.payment_status !== 'completed');
             }
             
             filteredPayments.forEach(payment => {

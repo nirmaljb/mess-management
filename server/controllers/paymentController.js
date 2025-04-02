@@ -113,6 +113,34 @@ const getAllPayments = async (req, res) => {
     }
 };
 
+const getIncompletePayment = async (req, res) => {
+    try {
+        const payments = await prisma.payment.findMany({
+            where: {
+                payment_status: {
+                    in: ["failed", "pending"]
+                }
+            }
+        });
+        res.json(payments);
+    }catch(err) {
+        res.status(500).json({ message: 'Something went wrong', error: err });
+    }
+};
+
+const getCompletePayment = async (req, res) => {
+    try {
+        const payments = await prisma.payment.findMany({
+            where: {
+                payment_status: "completed"
+            }
+        });
+        res.json(payments);
+    }catch(err) {
+        res.status(500).json({ message: 'Something went wrong', error: err });
+    }
+};
+
 const getUserPayments = async (req, res) => {
     const { id } = req.query;
     console.log(id);
@@ -146,5 +174,7 @@ module.exports = {
     verifyOrder,
     paymentDetails,
     getAllPayments,
-    getUserPayments
+    getUserPayments,
+    getIncompletePayment,
+    getCompletePayment
 }
