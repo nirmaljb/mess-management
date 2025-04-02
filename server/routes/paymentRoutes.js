@@ -1,4 +1,4 @@
-const { createOrder, verifyOrder, paymentDetails, getAllPayments, getUserPayments } = require("../controllers/paymentController");
+const { createOrder, verifyOrder, paymentDetails, getAllPayments, getUserPayments, getCompletePayment, getIncompletePayment } = require("../controllers/paymentController");
 
 const express = require("express");
 const router = express.Router();
