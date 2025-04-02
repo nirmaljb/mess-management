@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       Int       @default(autoincrement())
+  unique_id                String    @id @default(uuid())
+  fullname                 String
+  email                    String    @unique
+  enrollment_no            String    @unique
+  dob                      String
+  phone                    String
+  course                   String
+  department               String
+  enrolled_year            Int
+  expected_graduation_year Int
+  hostel_name              String
+  room_no                  Int
+  password                 String
+  photo_url                String
+  created_at               DateTime  @default(now())
+  updated_at               DateTime  @updatedAt
+  payment                  Payment[]
+  query                    Query[]
+  request   Request[]
+}
+
+model Query {
+  id         Int      @default(autoincrement())
+  unqiue_id  String   @id @default(uuid())
+  enrollment_no  String
+  category   String
+  query      String
+  subject    String
+  photo_url  String?
+  created_at DateTime @default(now())
+  status     QueryStatus @default(pending)
+  user       User     @relation(fields: [enrollment_no], references: [enrollment_no])
+}
+
+model Payment {
+  id         Int      @default(autoincrement())
+  unique_id  String   @id @default(uuid())
+  enrollment_no  String
+  amount     Int
+  created_at DateTime @default(now())
+  payment_time String
+  payment_method String?
+  payment_status PaymentStatus @default(pending)
+  transaction_id String?
+  user       User     @relation(fields: [enrollment_no], references: [enrollment_no])
+}
+
+model Admin {
+  id Int @default(autoincrement())
+  unique_id String @id @default(uuid())
+  username String
+  password String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  logged_in_time String?
+  logged_out_time String?
+}
+
+model Request {
+  id Int @default(autoincrement())
+  unique_id String @id @default(uuid())
+  enrollment_no String
+  reason ReductionReason
+  message String?
+  attached_letter String?
+  status ReductionRequestStatus @default(pending)
+  starting_date String
+  ending_date String
+  created_at DateTime @default(now())
+  user User @relation(fields: [enrollment_no], references: [enrollment_no])
+}
+
+enum ReductionRequestStatus {
+  pending
+  approved
+  rejected
+}
+
+enum QueryStatus {
+  pending
+  resolved
+  rejected
+}
+
+enum ReductionReason {
+  vacation
+  medical_emergency
+  family_crisis
+  scholarship
+  other
+}
+
+enum PaymentStatus {
+  pending
+  captured
+  refunded
+  completed
+  failed
+}
+
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management System - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+            <div class="p-6 flex-1">
+                <div class="flex items-center space-x-3 mb-8">
+                    <a href="/admin/landing.html" class="flex items-center space-x-3">
+                        <i class="fas fa-utensils text-primary-600 text-2xl"></i>
+                        <span class="text-xl font-bold text-gray-900">Mess Admin</span>
+                    </a>
+                </div>
+                <nav class="space-y-1">
+                    <a href="/admin/pages/dashboard.html" class="flex items-center space-x-3 px-4 py-3 bg-primary-50 text-primary-600 rounded-lg font-medium">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Queries</span>
+                    </a>
+                    <a href="/admin/pages/payment.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-users"></i>
+                        <span>Payments</span>
+                    </a>
+                    <a href="/admin/pages/mess-reduction.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Mess Reduction Request</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-6 border-t border-gray-200">
+                <button onclick="logout()" class="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Queries Section -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-semibold text-gray-900">Recent Queries</h2>
+                        </div>
+
+                        <!-- Card List Design -->
+                        <div class="space-y-4" id="queriesList">
+                            <!-- Query cards will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const getQueries = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/query/get-all-queries');
+                const queries = await response.json();
+                const queriesList = document.getElementById('queriesList');
+
+                console.log(queries);
+                queriesList.innerHTML = ''; // Clear existing content
+                
+                queries.forEach(query => {
+                    // Determine status color based on query status
+                    let statusColor = 'text-gray-500 bg-gray-50';
+                    let statusText = 'Pending';
+                    if (query.status === 'approved') {
+                        statusColor = 'text-emerald-700 bg-emerald-50';
+                        statusText = 'Resolved';
+                    } else if (query.status === 'disapproved') {
+                        statusColor = 'text-rose-700 bg-rose-50';
+                        statusText = 'Rejected';
+                    }
+
+                    const queryCard = document.createElement('div');
+                    queryCard.className = 'bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow';
+                    
+                    queryCard.innerHTML = `
+                        <div class="flex flex-col">
+                            <div class="flex-1">
+                                <div class="mb-4">
+                                    <span class="inline-block px-3 py-1 text-sm font-medium text-primary-700 bg-primary-50 rounded-full mb-2">
+                                        ${query.category} Issue
+                                    </span>
+                                    <h4 class="text-xl font-semibold text-gray-900">${query.subject}</h4>
+                                    <p class="mt-2 text-gray-700 text-lg">${query.query || 'No message provided'}</p>
+                                </div>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="text-sm text-gray-500">
+                                            <i class="far fa-calendar-alt mr-1"></i>
+                                            ${new Date(query.created_at).toLocaleDateString()}
+                                        </span>
+                                        <span class="px-2.5 py-0.5 text-xs font-medium rounded-full ${statusColor}">
+                                            ${statusText}
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="resolveQuery(${query.id})" class="px-3 py-1.5 text-sm font-medium text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors">
+                                            <i class="fas fa-check mr-1"></i> Resolve
+                                        </button>
+                                        <button onclick="rejectQuery(${query.id})" class="px-3 py-1.5 text-sm font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-md transition-colors">
+                                            <i class="fas fa-times mr-1"></i> Reject
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <div class="flex items-center space-x-3">
+                                    <div class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                        <span class="text-primary-600 text-sm font-medium">${query.user.fullname.charAt(0)}</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-600">${query.user.fullname}</p>
+                                        <p class="text-xs text-gray-500">${query.user.enrollment_no}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    queriesList.appendChild(queryCard);
+                });
+            } catch (error) {
+                console.error('Error fetching queries:', error);
+            }
+        }
+
+        const resolveQuery = async (queryId) => {
+            console.log(queryId);
+            try {
+                await fetch(`http://localhost:8000/query/resolve-query`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query_id: queryId })
+                });
+                // Refresh queries list
+                getQueries();
+            } catch (error) {
+                console.error('Error resolving query:', error);
+            }
+        }
+
+        const rejectQuery = async (queryId) => {
+            console.log(queryId);
+            try {
+                await fetch(`http://localhost:8000/query/reject-query`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query_id: queryId })
+                });
+
+                // Refresh queries list
+                getQueries();
+            } catch (error) {
+                console.error('Error rejecting query:', error);
+            }
+        }
+
+        // Load queries when page loads
+        getQueries();
+    </script>
+    <script src="/scripts/logout.js"></script>
+</body>
+</html>

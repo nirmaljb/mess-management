@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 h-16">
+        <div class="px-4 h-full">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span class="text-xl font-bold text-gray-800"><a href="/index.html">MessMaster</a></span>
+                </div>
+                <button id="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-300 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md min-h-screen fixed">
+            <nav class="p-6">
+                <div class="space-y-3">
+                    <a href="/pages/dashboard.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/pages/reduction-form.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>Mess Reduction</span>
+                    </a>
+                    <a href="/pages/payment.html" class="flex items-center space-x-3 p-3 rounded-md bg-green-500 text-white hover:bg-green-600 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            <path d="M12 7v10"/>
+                        </svg>
+                        <span>Payments</span>
+                    </a>
+                    <a href="/pages/query.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>Complaints & Queries</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Payment section</h2>
+
+                <!-- Cards Container -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Pay now Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Pay Now</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Due Date</span>
+                                <span class="text-gray-600">5th April, 2025</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Current Balance</span>
+                                <span class="text-2xl font-bold text-green-600">₹8,580</span>
+                            </div>
+                            <button id="payNowBtn" class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-md transition-colors duration-300 flex items-center justify-center space-x-2">
+                                <span>Pay ₹8,580</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fee History Card -->
+                    <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                        <h3 class="text-3xl font-semibold text-gray-800 mb-4">Fee History</h3>
+                        <p>Checkout all your past payment history</p>
+                        <div class="space-y-4">
+                            <button id="viewHistoryBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md transition-colors duration-300 flex items-center justify-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 20V10"></path>
+                                    <path d="M18 20V4"></path>
+                                    <path d="M6 20v-6"></path>
+                                </svg>
+                                <span>View History</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-info"></div>
+            </div>
+        </main>
+    </div>
+    <script>
+        let flag = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const payNowBtn = document.getElementById('payNowBtn');
+            const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+            const mainContent = document.querySelector('main');
+            const enrollment_no = localStorage.getItem('enrollment_no');
+            const user_details = {
+                fullname: localStorage.getItem('fullname'),
+                enrollment_no: localStorage.getItem('enrollment_no'),
+            }
+
+            payNowBtn.addEventListener('click', async function() {
+                const amount = 8580;
+                const response = await fetch('http://localhost:8000/payment/create-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: amount,
+                        enrollment_no: enrollment_no
+                    })
+                });
+
+                const payment = await response.json();
+                console.log(payment);
+
+                const options = {
+                    key: "rzp_test_VzpKU5K1bssuT5",
+                    amount: payment.order.amount * 100, // Convert to paise
+                    currency: payment.order.currency,
+                    name: "Mess Master",
+                    description: "Mess Payment",
+                    order_id: payment.order.id,
+                    handler: async function (result) {
+                        const paymentData = {
+                            razorpay_order_id: result.razorpay_order_id,
+                            razorpay_payment_id: result.razorpay_payment_id,
+                            razorpay_signature: result.razorpay_signature,
+                        };
+
+                        console.log('Sending payment verification request:', paymentData);
+                        const verifyResponse = await fetch('http://localhost:8000/payment/verify-order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(paymentData),
+                        });
+                        
+                        const verify = await verifyResponse.json();
+                        console.log(verify);
+
+                        if(verify.success) {
+                            window.location.href = 'success.html';
+                        } else {
+                            alert('Payment failed');
+                        }
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+            });
+
+            viewHistoryBtn.addEventListener('click', async function() {
+                // Create history table
+                if(flag) return;
+                const result = await fetch(`http://localhost:8000/payment/get-user-payments?id=${enrollment_no}`);
+                const res = await result.json();
+                const receipts = res.payment;
+
+                console.log(receipts);
+
+                const historyTable = document.createElement('div');
+                historyTable.className = 'bg-white rounded-lg shadow-md p-6 mt-6';
+
+                if (!receipts || receipts.length === 0) {
+                    historyTable.innerHTML = `
+                        <div class="text-center py-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                            <h3 class="mt-2 text-lg font-medium text-gray-900">No payment history</h3>
+                            <p class="mt-1 text-sm text-gray-500">You haven't made any payments yet.</p>
+                        </div>`;
+                } else {
+                    historyTable.innerHTML = `
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Payment History</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-gray-50">
+                                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Transaction ID</th>
+                                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Date</th>
+                                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Amount</th>
+                                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200"></tbody>
+                            </table>
+                        </div>`;
+                    
+                    const tbody = historyTable.querySelector('tbody');
+                    
+                    receipts.forEach(receipt => {
+                        const statusColor = receipt.payment_status.toLowerCase() === 'completed' ? 'text-green-600' : 'text-yellow-600';
+                        
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-gray-50';
+
+                        // Transaction ID cell
+                        const transactionIdCell = document.createElement('td');
+                        transactionIdCell.className = 'py-3 px-4 text-sm text-gray-700';
+                        transactionIdCell.textContent = receipt.transaction_id;
+                        
+                        // Date cell
+                        const dateCell = document.createElement('td');
+                        dateCell.className = 'py-3 px-4 text-sm text-gray-700';
+                        dateCell.textContent = new Date(receipt.created_at).toLocaleDateString();
+                        
+                        // Amount cell
+                        const amountCell = document.createElement('td');
+                        amountCell.className = 'py-3 px-4 text-sm text-gray-700';
+                        amountCell.textContent = `₹${receipt.amount}`;
+                        
+                        // Status cell
+                        const statusCell = document.createElement('td');
+                        statusCell.className = `py-3 px-4 text-sm ${statusColor} font-medium`;
+                        statusCell.textContent = receipt.payment_status;
+                        
+                        // Append cells to row
+                        tr.appendChild(transactionIdCell);
+                        tr.appendChild(dateCell);
+                        tr.appendChild(amountCell);
+                        tr.appendChild(statusCell);
+                        
+                        // Append row to tbody
+                        tbody.appendChild(tr);
+                    });
+                }
+                
+                mainContent.appendChild(historyTable);
+                flag = true;
+            });
+        });
+    </script>
+    <script src="/scripts/logout.js"></script>
+</body>
+</html>

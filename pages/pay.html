@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <title>Payment</title>
+</head>
+<body>
+    <h1>Payment Gateway</h1>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const order_id = params.get('order_id');
+        const amount = params.get('amount');
+
+        if(!order_id || !amount) {
+            document.body.innerHTML = "<h1>Error: Invalid payment request</h1>";
+            throw new Error("Missing order_id or amount");
+        };
+
+        const options = {
+            key: "rzp_test_9kDR4EVIHC7twO",
+            amount: amount, // Convert to paise
+            currency: "INR",
+            name: "Mess Master",
+            description: "Mess Payment",
+            order_id: order_id,
+            handler: function (response) {
+                window.location.href = "dashboard.html"; // Redirect on success
+            },
+            prefill: {
+                name: "Random Person",
+                email: "randomperson@example.com",
+                contact: "8583812372",
+            },
+        }
+
+        const razorpay = new Razorpay(options);
+        razorpay.open();
+
+    </script>
+</body>
+</html>

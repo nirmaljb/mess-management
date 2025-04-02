@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management System - Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-white"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        
+        <!-- Navigation -->
+        <nav class="relative container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-utensils text-primary-600 text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-900">Mess Admin</span>
+                </div>
+                <a href="index.html" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                    Go to Dashboard
+                </a>
+            </div>
+        </nav>
+
+        <!-- Hero Content -->
+        <div class="relative container mx-auto px-6 py-16">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Welcome to Mess Management
+                    <span class="text-primary-600">Admin Portal</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Streamline your mess operations with our comprehensive management system. Handle queries, manage students, and oversee billing all in one place.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="/admin/pages/login.html" class="px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                        Access Dashboard
+                    </a>
+                    <a href="#" class="px-8 py-3 bg-white text-primary-600 border-2 border-primary-600 rounded-lg hover:bg-primary-50 transition-colors">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Key Features</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-clipboard-list text-primary-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Query Management</h3>
+                    <p class="text-gray-600">Handle student queries efficiently with our streamlined approval system.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-primary-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Student Management</h3>
+                    <p class="text-gray-600">Manage student registrations, meal plans, and attendance records.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-primary-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Analytics Dashboard</h3>
+                    <p class="text-gray-600">Get insights into mess operations with detailed analytics and reports.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-utensils text-primary-400 text-2xl"></i>
+                        <span class="text-xl font-bold">Mess Admin</span>
+                    </div>
+                    <p class="text-gray-400">Streamlining mess management for better efficiency.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Queries</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Students</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Settings</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Email: admin@mess.com</li>
+                        <li>Phone: +1 234 567 890</li>
+                        <li>Address: 123 Admin Street</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Mess Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .bg-grid-pattern {
+            background-image: linear-gradient(to right, #3b82f6 1px, transparent 1px),
+                            linear-gradient(to bottom, #3b82f6 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</body>
+</html> 

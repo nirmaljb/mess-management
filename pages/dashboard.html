@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 h-16">
+        <div class="px-4 h-full">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span class="text-xl font-bold text-gray-800"><a href="/index.html">MessMaster</a></span>
+                </div>
+                <button id="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors duration-300 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="flex pt-16">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md min-h-screen fixed">
+            <nav class="p-6">
+                <div class="space-y-3">
+                    <a href="/pages/dashboard.html" class="flex items-center space-x-3 p-3 rounded-md bg-green-500 text-white hover:bg-green-600 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/pages/reduction-form.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <span>Mess Reduction</span>
+                    </a>
+                    <a href="/pages/payment.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <span>Payments</span>
+                    </a>
+                    <a href="/pages/query.html" class="flex items-center space-x-3 p-3 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>Complaints & Queries</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-4">Welcome to your Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <h3 class="text-lg font-medium text-gray-500">Last Payment On</h3>
+                        <p id="last-payment" class="text-2xl font-bold text-gray-900">1st February 2025</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <h3 class="text-lg font-medium text-gray-500">Last Payment</h3>
+                        <p id="amount" class="text-2xl font-bold text-gray-900">₹8,550</p>
+                    </div>
+                </div>
+
+                <!-- User Profile Card -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-start space-x-6">
+                        <div class="user-info flex items-center space-x-6"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/scripts/logout.js"></script>
+    <script>
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+
+            const day = date.getDate();
+            const month = new Intl.DateTimeFormat("en-GB", { month: "long" }).format(date);
+            const year = date.getFullYear();
+
+            const getOrdinalSuffix = (d) => {
+                if (d > 3 && d < 21) return "th";
+                switch (d % 10) {
+                case 1: return "st";
+                case 2: return "nd";
+                case 3: return "rd";
+                default: return "th";
+                }
+            };
+
+            return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
+        }
+        async function readDB() {
+            const enrollment_no = localStorage.getItem('enrollment_no');
+            const lastPaymentDiv = document.getElementById('last-payment');
+            const amountDiv = document.getElementById('amount');
+
+            console.log(enrollment_no);
+
+            const response = await fetch(`http://localhost:8000/user?id=${enrollment_no}`);
+            const data = await response.json();
+
+            console.log(data);
+
+            if(data.payment.length > 0) {
+                lastPaymentDiv.innerHTML = formatDate(data.payment[0].created_at);
+                amountDiv.innerHTML = `₹${data.payment[0].amount}`;
+            } else {
+                lastPaymentDiv.innerHTML = "No payment history";
+                amountDiv.innerHTML = "No payment history";
+            }
+
+            const user = {
+                name: data.fullname,
+                photo: data.photo_url,
+                enrollment: data.enrollment_no,
+                department: data.department,
+                year: data.expected_graduation_year,
+                dob: data.dob,
+                hostel_name: data.hostel_name,
+                room_no: data.room_no,
+            };
+
+            const userDiv = document.querySelector('.user-info');
+            userDiv.innerHTML = `
+                <div class="relative">
+                    <img src="${user.photo}" alt="User Photo" class="w-24 h-24 rounded-full object-cover border-4 border-blue-50">
+                    <div class="absolute bottom-0 right-0 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">${user.name}</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Enrollment No</p>
+                            <p class="font-semibold text-gray-800">${user.enrollment}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Department</p>
+                            <p class="font-semibold text-gray-800">${user.department}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Expected Graduation Year</p>
+                            <p class="font-semibold text-gray-800">${user.year}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Date of Birth</p>
+                            <p class="font-semibold text-gray-800">${user.dob}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Hostel Name</p>
+                            <p class="font-semibold text-gray-800">${user.hostel_name}</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg">
+                            <p class="text-sm text-gray-500">Room Number</p>
+                            <p class="font-semibold text-gray-800">${user.room_no}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            console.log(data);
+        }
+
+        readDB();
+    </script>
+</body>
+</html>

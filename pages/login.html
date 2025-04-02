@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span class="text-xl font-bold text-gray-800"><a href="/index.html">MessMaster</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md transform transition-all">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Login</h2>
+            <form id="loginForm" class="space-y-6">
+                <div class="space-y-2">
+                    <label for="enroll_no" class="block text-sm font-medium text-gray-700">Enrollment No</label>
+                    <input type="text" id="enroll_no" name="enroll_no" required
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all outline-none"
+                        placeholder="Enter your enrollment number">
+                </div>
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" required
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all outline-none"
+                        placeholder="Enter your password">
+                </div>
+                <button type="submit" 
+                    class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transform transition-all hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                    Sign In
+                </button>
+            </form>
+        </div>
+    </main>
+    <script>
+        async function submitFormHandler(e) {
+            e.preventDefault();
+
+            const enrollInput = document.getElementById('enroll_no');
+            const passwordInput = document.getElementById('password');
+
+            const loginData = {
+                enrollment_no: enrollInput.value,
+                password: passwordInput.value
+            };
+
+            try {
+                const response = await fetch('http://localhost:8000/user/login', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(loginData)
+                })
+
+                const res = await response.json();
+                if(!res.success) {
+                    alert("Invalid enrollment number or password");
+                    return;
+                }
+
+                const user = res.user;
+                
+                
+                if(res.success) {
+                    localStorage.setItem('fullname', user.fullname);
+                    localStorage.setItem('enrollment_no', user['enrollment_no']);
+                    localStorage.setItem('token', res.token);
+                    window.location.href = '/pages/dashboard.html';
+                } else {
+                    alert(res.message || "Invalid enrollment number or password");
+                }
+            }catch(err) {
+                console.log("Error: ", err);
+            }
+        }
+        document.getElementById('loginForm').addEventListener('submit', submitFormHandler);
+    </script>
+</body>
+</html>

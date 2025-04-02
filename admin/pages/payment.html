@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management System - Payment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+            <div class="p-6 flex-1">
+                <div class="flex items-center space-x-3 mb-8">
+                    <a href="/admin/landing.html" class="flex items-center space-x-3">
+                        <i class="fas fa-utensils text-primary-600 text-2xl"></i>
+                        <span class="text-xl font-bold text-gray-900">MessMaster Admin</span>
+                    </a>
+                </div>
+                <nav class="space-y-1">
+                    <a href="/admin/pages/dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Queries</span>
+                    </a>
+                    <a href="/admin/pages/payment.html" class="flex items-center space-x-3 px-4 py-3 bg-primary-50 text-primary-600 rounded-lg font-medium">
+                        <i class="fas fa-users"></i>
+                        <span>Payments</span>
+                    </a>
+                    <a href="/admin/pages/mess-reduction.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Mess Reduction Requests</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-6 border-t border-gray-200">
+                <button onclick="logout()" class="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Payment Section -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-semibold text-gray-900">Payments</h2>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="filterPayments('all')" class="px-6 py-2.5 border-2 bg-gray-100 text-gray-700 rounded transition-all duration-200 font-medium text-sm">
+                                    All Payments
+                                </button>
+                                <button onclick="filterPayments('completed')" class="px-6 py-2.5 bg-blue-600 text-white rounded hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm">
+                                    Completed
+                                </button>
+                                <button onclick="filterPayments('pending')" class="px-6 py-2.5 bg-yellow-400 text-white rounded hover:bg-yellow-500 shadow-md hover:shadow-lg transition-all duration-200 font-medium text-sm">
+                                    Pending
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Modern Table Design -->
+                        <div class="relative overflow-x-auto shadow-sm rounded-lg border border-gray-200">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="sticky left-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50 z-10">Student</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Time</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hostel</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Room No</th>
+                                            <th scope="col" class="sticky right-0 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50 z-10">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200" id="paymentsList">
+                                        <!-- Payment items will be dynamically added here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        let allPayments = []; // Store all payments globally
+
+        const getPayments = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/payment/get-all-payments');
+                allPayments = await response.json();
+                filterPayments('all'); // Show all payments by default
+            } catch (error) {
+                console.error('Error fetching payments:', error);
+            }
+        }
+
+        const filterPayments = (status) => {
+            const paymentsList = document.getElementById('paymentsList');
+            paymentsList.innerHTML = '';
+            
+            let filteredPayments = allPayments;
+            if (status !== 'all') {
+                filteredPayments = allPayments.filter(payment => payment.payment_status === status);
+            }
+            
+            filteredPayments.forEach(payment => {
+                const paymentElement = document.createElement('tr');
+                paymentElement.className = 'hover:bg-gray-50 transition-colors';
+                
+                // Determine status color based on payment status
+                let statusColor = 'text-gray-500 bg-gray-50';
+                let statusText = 'Pending';
+                if (payment.payment_status === 'completed') {
+                    statusColor = 'text-emerald-700 bg-emerald-50';
+                    statusText = 'Completed';
+                } else if (payment.payment_status === 'failed') {
+                    statusColor = 'text-rose-700 bg-rose-50';
+                    statusText = 'Failed';
+                }
+
+                paymentElement.innerHTML = `
+                    <td class="sticky left-0 px-6 py-4 whitespace-nowrap bg-white z-10">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-8 w-8">
+                                <div class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span class="text-primary-600 font-medium">${payment.user.fullname.charAt(0)}</span>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${payment.user.fullname}</div>
+                                <div class="text-sm text-gray-500">${payment.user.enrollment_no}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900">₹${payment.amount}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">${new Date(payment.created_at).toLocaleDateString()}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">${payment.payment_time}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500 font-mono">${payment.transaction_id}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">${payment.user.hostel_name}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-500">${payment.user.room_no}</div>
+                    </td>
+                    <td class="sticky right-0 px-6 py-4 whitespace-nowrap bg-white z-10">
+                        <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColor}">
+                            ${statusText}
+                        </span>
+                    </td>
+                `;
+                paymentsList.appendChild(paymentElement);
+            });
+        }
+
+        const viewPayment = async (paymentId) => {
+            // Implement view payment details functionality
+            console.log('View payment:', paymentId);
+        }
+
+        const downloadReceipt = async (paymentId) => {
+            // Implement download receipt functionality
+            console.log('Download receipt:', paymentId);
+        }
+
+        // Load payments when page loads
+        getPayments();
+    </script>
+    <script src="/scripts/logout.js"></script>
+</body>
+</html>

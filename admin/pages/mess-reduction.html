@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management System - Mess Reduction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+            <div class="p-6 flex-1">
+                <div class="flex items-center space-x-3 mb-8">
+                    <a href="/admin/landing.html" class="flex items-center space-x-3">
+                        <i class="fas fa-utensils text-primary-600 text-2xl"></i>
+                        <span class="text-xl font-bold text-gray-900">MessMaster Admin</span>
+                    </a>
+                </div>
+                <nav class="space-y-1">
+                    <a href="/admin/pages/dashboard.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Queries</span>
+                    </a>
+                    <a href="/admin/pages/payment.html" class="flex items-center space-x-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-users"></i>
+                        <span>Payments</span>
+                    </a>
+                    <a href="/admin/pages/mess-reduction.html" class="flex items-center space-x-3 px-4 py-3 bg-primary-50 text-primary-600 rounded-lg font-medium">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Mess Reduction Request</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-6 border-t border-gray-200">
+                <button onclick="logout()" class="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-y-auto p-8">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Mess Reduction Section -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-semibold text-gray-900">Mess Reduction Requests</h2>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm font-medium text-gray-700">From:</label>
+                                    <input type="date" id="startDate" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm font-medium text-gray-700">To:</label>
+                                    <input type="date" id="endDate" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                </div>
+                                <button onclick="filterRequests()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Requests Table -->
+                        <div class="relative overflow-x-auto shadow-sm rounded-lg border border-gray-200">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="sticky left-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">Student Name</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Enrollment No.</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">From Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To Date</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th scope="col" class="sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="requestsTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Table rows will be populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const getDateDiff = (startDate, endDate) => {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+        
+        const getReductionRequest = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/mess/get-all-request');
+                const requests = await response.json();
+                displayRequests(requests);
+            } catch (error) {
+                console.error('Error fetching requests:', error);
+            }
+        }
+
+        const displayRequests = (requests) => {
+            const tableBody = document.getElementById('requestsTableBody');
+            tableBody.innerHTML = '';
+
+            requests.forEach(request => {
+                const diffDays = getDateDiff(request.starting_date, request.ending_date);
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 transition-colors';
+                row.innerHTML = `
+                    <td class="sticky left-0 px-6 py-4 whitespace-nowrap bg-white">
+                        <div class="text-sm font-medium text-gray-900">${request.user.fullname}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${request.enrollment_no}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${request.starting_date}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${request.ending_date}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${diffDays} days</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">${request.reason}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${request.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
+                              request.status === 'approved' ? 'bg-green-100 text-green-800' : 
+                              'bg-red-100 text-red-800'}">
+                            ${request.status}
+                        </span>
+                    </td>
+                    <td class="sticky right-0 px-6 py-4 whitespace-nowrap text-sm font-medium bg-white">
+                        ${request.status === 'pending' ? `
+                            <button onclick="resolveRequest(${request.id})" class="text-green-600 hover:text-green-900 mr-3">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button onclick="rejectRequest(${request.id})" class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        ` : ''}
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+            const resolveRequest = async (requestId) => {
+                try {
+                    const response = await fetch(`http://localhost:8000/mess/approve-request`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            request_id: requestId,
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        getReductionRequest();
+                    }
+                } catch (error) {
+                console.error('Error updating request status:', error);
+            }
+        }
+
+        const rejectRequest = async (requestId) => {
+            try {
+                const response = await fetch(`http://localhost:8000/mess/reject-request`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        request_id: requestId,
+                    })
+                });
+
+                if (response.ok) {
+                    getReductionRequest();
+                }
+            } catch (error) {
+                console.error('Error rejecting request:', error);
+            }
+        }
+        getReductionRequest();
+    </script>
+    <script src="/scripts/logout.js"></script>
+</body>
+</html>

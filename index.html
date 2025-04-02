@@ -3,102 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 300px;
-        }
-        .login-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>MessMaster - Mess Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/lucide-icons@0.298.0/icons/users.svg" rel="stylesheet">
 </head>
-<body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="enroll_no">Enrollment No</label>
-                <input type="text" id="enroll_no" name="enroll_no" required>
+<body class="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span class="ml-2 text-xl font-bold text-gray-900">MessMaster</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
+                    <a href="#about" class="text-gray-600 hover:text-gray-900 transition-colors">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900 px-4 py-2">Login</button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">Sign Up</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+            <span class="block">Streamline Your</span>
+            <span class="block text-green-600">Mess Management</span>
+        </h1>
+        <p class="mt-6 max-w-3xl mx-auto text-xl text-gray-600">
+            Efficiently manage student mess operations with our comprehensive system. 
+            Handle payments, waivers, and administrative tasks all in one place.
+        </p>
+        <div class="mt-10">
+            <a href="/pages/login.html" class="inline-flex items-center bg-green-600 text-white px-8 py-3 rounded-md hover:bg-green-700 transition-colors">
+                Get Started
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+            </a>
+        </div>
     </div>
+
+    <!-- Features Section -->
+    <div class="bg-white py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-16">
+                Comprehensive Mess Management Features
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Student Authentication -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 13c0 5-3 7-7 7-4 0-7-2-7-7"/>
+                        <path d="M10 7c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Student Authentication</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Secure login system with student verification and profile management.
+                    </p>
+                </div>
+
+                <!-- Payment Management -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Payment Management</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Handle mess fees, track payments, and generate payment receipts.
+                    </p>
+                </div>
+
+                <!-- Waiver Management -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Waiver Management</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Process and track mess fee waivers with proper documentation.
+                    </p>
+                </div>
+
+                <!-- Attendance Tracking -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 2v5h5"/>
+                        <path d="M5 11h3v5"/>
+                        <path d="M12 2v3a1 1 0 0 1-1 1H8"/>
+                        <path d="M4 17h16"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Attendance Tracking</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Monitor daily attendance and meal consumption patterns.
+                    </p>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.08a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Admin Dashboard</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Comprehensive admin panel for system management and monitoring.
+                    </p>
+                </div>
+
+                <!-- Reports & Analytics -->
+                <div class="bg-green-50 p-6 rounded-lg hover:shadow-lg transition-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+                    </svg>
+                    <h3 class="mt-4 text-xl font-medium text-gray-900 text-center">Reports & Analytics</h3>
+                    <p class="mt-2 text-gray-600 text-center">
+                        Generate detailed reports and analyze mess operations data.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-green-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span class="ml-2 text-xl font-bold">MessMaster</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-green-200 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-green-200 hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="text-green-200 hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-green-800 text-center">
+                <p>© 2024 MessMaster. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        async function submitFormHandler(e) {
-            e.preventDefault();
-
-            const enrollInput = document.getElementById('enroll_no');
-            const passwordInput = document.getElementById('password');
-
-            const loginData = {
-                enroll_no: enrollInput.value,
-                password: passwordInput.value
-            };
-
-            try {
-                const response = await fetch('http://localhost:8000/signup', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(loginData)
-                })
-
-                const res = await response.json();
-                console.log(res);
-            }catch(err) {
-                console.log("Error: ", err);
-            }
+        const redirectToLogin = () => {
+            // Add your login redirect logic here
         }
-        document.getElementById('loginForm').addEventListener('submit', submitFormHandler);
+
+        const loginBtn = document.querySelector('.signup-btn');
+        loginBtn.addEventListener('click', redirectToLogin);
     </script>
 </body>
 </html>
