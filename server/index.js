@@ -37,7 +37,7 @@ app.post("/", async (req, res) => {
             course: course,
             department: department,
             enrolled_year: enrolled_year,
-            password: hashedPassword,
+            password: password,
             hostel_name: hostel_name,
             room_no: room_no,
             expected_graduation_year: expected_graduation_year

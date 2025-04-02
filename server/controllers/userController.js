@@ -1,11 +1,11 @@
 const { PrismaClient } = require("@prisma/client")
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const z = require("zod");
 
 const prisma = new PrismaClient();
 
 const userLogin = async (req, res) => {
+    const { enrollment_no, password } = req.body;
     const schema = z.object({
         enrollment_no: z.string().min(13).max(13),
         password: z.string().min(8).max(50)
@@ -20,7 +20,7 @@ const userLogin = async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
             where: {
-                enrollment_no: response.data.enrollment_no
+                enrollment_no: enrollment_no
             }
         });
         
@@ -28,7 +28,7 @@ const userLogin = async (req, res) => {
             return res.json({ success: false, message: 'No student found with this enrollment number' }); 
         }
         
-        if(!bcrypt.compareSync(response.data.password, user.password)) {
+        if(password !== user.password) {
             return res.json({ success: false, message: 'Invalid password' });
         }
         
@@ -39,9 +39,9 @@ const userLogin = async (req, res) => {
         
         const token = jwt.sign(payload, process.env.JWT_SECRET);
         
-        res.json({ success: true, user: user, token: token});
+        res.json({ success: true, user: user, token: token });
     }catch(err) {
-        res.json({ success: false, message: 'Something went wrong' });
+        res.json({ success: false, message: 'Something went wrong', error: err });
     }
 };
 

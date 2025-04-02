@@ -87,6 +87,7 @@
                 })
 
                 const res = await response.json();
+                console.log(res);
                 if(!res.success) {
                     alert("Invalid enrollment number or password");
                     return;
