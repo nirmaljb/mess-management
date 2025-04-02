@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client")
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const z = require("zod");
 
 const prisma = new PrismaClient();
@@ -27,7 +28,7 @@ const userLogin = async (req, res) => {
             return res.json({ success: false, message: 'No student found with this enrollment number' }); 
         }
         
-        if(user.password !== response.data.password) {
+        if(!bcrypt.compareSync(response.data.password, user.password)) {
             return res.json({ success: false, message: 'Invalid password' });
         }
         
