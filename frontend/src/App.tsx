@@ -1,15 +1,9 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import Header from './components/Header';
+import { Outlet } from 'react-router';
 
 export default function App() {
   return (
-    <header>
-      <h1 className='text-bold'>Authentication</h1>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </header>
+    <h1>App page</h1>
   );
 }
