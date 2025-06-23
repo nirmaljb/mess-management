@@ -1,17 +1,16 @@
-import React, { StrictMode } from 'react'
-import ReactDOM, { createRoot } from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react'
 import {
   BrowserRouter,
-  createBrowserRouter,
   Route,
   Routes,
 } from "react-router";
-import Header from './components/Header.tsx'
 import MainLayout from './MainLayout.tsx'
 import Auth from './pages/Auth.tsx'
+import Dashboard, { loader } from './pages/Dashboard.tsx'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -28,6 +27,9 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<MainLayout />}>
             <Route index element={<App />} />
             <Route path="auth" element={<Auth />} />
+          </Route>
+          <Route path="/student/app" element={<MainLayout /> }>
+            <Route index element={<Dashboard />} loader={loader}/>
           </Route>
         </Routes>
       </ClerkProvider>
