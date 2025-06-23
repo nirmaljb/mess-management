@@ -7,9 +7,8 @@ export default function Header() {
         <header>
             <nav className="flex">
                 <h1>Mess Management</h1>
-
                 <div>
-                    <SignIn />
+                    <Link to="/auth"><Button>Getting Started</Button></Link>
                 </div>
             </nav>
         </header>

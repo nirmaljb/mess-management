@@ -1,11 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { StrictMode } from 'react'
+import ReactDOM, { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react'
 import {
+  BrowserRouter,
   createBrowserRouter,
-  RouterProvider,
+  Route,
+  Routes,
 } from "react-router";
 import Header from './components/Header.tsx'
 import MainLayout from './MainLayout.tsx'
@@ -18,27 +20,17 @@ if (!PUBLISHABLE_KEY) {
   throw new Error('Missing Publishable Key')
 }
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: MainLayout,
-    children: [
-      {
-        index: true,
-        Component: App,
-      },
-      {
-        path: 'auth',
-        Component: Auth
-      }
-    ]
-  },
-]);
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
-    </ClerkProvider>
-  </React.StrictMode>,
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <BrowserRouter>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<App />} />
+            <Route path="auth" element={<Auth />} />
+          </Route>
+        </Routes>
+      </ClerkProvider>
+    </BrowserRouter>
+  </StrictMode>,
 )
