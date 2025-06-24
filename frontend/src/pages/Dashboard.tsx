@@ -1,39 +1,36 @@
-import { redirect, useLoaderData, type LoaderFunctionArgs } from 'react-router'
-import { getAuth } from '@clerk/react-router/ssr.server'
-import { createClerkClient } from '@clerk/react-router/api.server'
+import { useAuth } from "@clerk/clerk-react"
 
-export async function loader(args: LoaderFunctionArgs) {
-  // Use `getAuth()` to get the user's ID
-  const { userId } = await getAuth(args)
-  console.log(userId);
+export default function Example() {
+  const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth()
 
-  // Protect the route by checking if the user is signed in
-  if (!userId) {
-    return redirect('/auth?redirect_url=' + args.request.url)
+  const fetchExternalData = async () => {
+    // Use `getToken()` to get the current user's session token
+    const token = await getToken()
+
+    // Use `token` to fetch data from an external API
+    const response = await fetch('https://api.example.com/data', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return response.json()
   }
 
-  // Instantiate the Backend SDK and get the user's full `Backend User` object
-  const user = await createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY }).users.getUser(
-    userId,
-  )
-
-  return {
-    user: JSON.stringify(user),
+  // Use `isLoaded` to check if Clerk is loaded
+  if (!isLoaded) {
+    return <div>Loading...</div>
   }
-}
 
-export function HydrateFallback() {
-  return <div>Loading...</div>;
-}
+  // Use `isSignedIn` to check if the user is signed in
+  if (!isSignedIn) {
+    // You could also add a redirect to the sign-in page here
+    return <div>Sign in to view this page</div>
+  }
 
-export default function Dashboard() {
-  const loaderData = useLoaderData();
-    return (
+  return (
     <div>
-      <h1>Dashboard</h1>
-      <pre>
-        <code>{JSON.stringify(loaderData, null, 2)}</code>
-      </pre>
+      Hello, {userId}! Your current active session is {sessionId}.
     </div>
   )
 }

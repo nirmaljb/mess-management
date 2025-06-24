@@ -10,7 +10,7 @@ import {
 } from "react-router";
 import MainLayout from './MainLayout.tsx'
 import Auth from './pages/Auth.tsx'
-import Dashboard, { loader } from './pages/Dashboard.tsx'
+import Dashboard from './pages/Dashboard.tsx'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -29,7 +29,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="auth" element={<Auth />} />
           </Route>
           <Route path="/student/app" element={<MainLayout /> }>
-            <Route index element={<Dashboard />} loader={loader}/>
+            <Route index element={<Dashboard />}/>
           </Route>
         </Routes>
       </ClerkProvider>
