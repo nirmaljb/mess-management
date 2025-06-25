@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.32.0",
     "@clerk/react-router": "^1.6.0",
+    "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.81.2",

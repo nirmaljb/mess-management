@@ -6,6 +6,7 @@ export default function Example() {
   const fetchExternalData = async () => {
     // Use `getToken()` to get the current user's session token
     const token = await getToken()
+    console.log(token);
 
     // Use `token` to fetch data from an external API
     const response = await fetch('https://api.example.com/data', {
@@ -16,6 +17,8 @@ export default function Example() {
 
     return response.json()
   }
+
+  fetchExternalData();
 
   // Use `isLoaded` to check if Clerk is loaded
   if (!isLoaded) {
