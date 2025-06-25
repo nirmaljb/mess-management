@@ -1,24 +1,25 @@
-import { useAuth } from "@clerk/clerk-react"
+import { useUser } from "@clerk/clerk-react"
 
 export default function Example() {
-  const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth()
+  // const { isLoaded, isSignedIn, userId, sessionId, getToken } = useAuth()
+  const { isSignedIn, user, isLoaded } = useUser()
 
-  const fetchExternalData = async () => {
-    // Use `getToken()` to get the current user's session token
-    const token = await getToken()
-    console.log(token);
+  // const fetchExternalData = async () => {
+  //   // Use `getToken()` to get the current user's session token
+  //   const token = await getToken()
+  //   console.log(token);
 
-    // Use `token` to fetch data from an external API
-    const response = await fetch('https://api.example.com/data', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+  //   // Use `token` to fetch data from an external API
+  //   const response = await fetch('https://api.example.com/data', {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
 
-    return response.json()
-  }
+  //   return response.json()
+  // }
 
-  fetchExternalData();
+  // fetchExternalData();
 
   // Use `isLoaded` to check if Clerk is loaded
   if (!isLoaded) {
@@ -33,7 +34,7 @@ export default function Example() {
 
   return (
     <div>
-      Hello, {userId}! Your current active session is {sessionId}.
+      Hello, {JSON.stringify(user)}! Your current active session is {isSignedIn}.
     </div>
   )
 }
