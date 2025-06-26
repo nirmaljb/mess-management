@@ -12,6 +12,7 @@ import MainLayout from './MainLayout.tsx'
 import Auth from './pages/Auth.tsx'
 import Dashboard from './pages/Dashboard.tsx'
 import StudentMainLayout from './StudentMainLayout.tsx'
+import Queries from './pages/Queries.tsx'
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -31,6 +32,7 @@ createRoot(document.getElementById('root')!).render(
           </Route>
           <Route path="/student/app" element={<StudentMainLayout /> }>
             <Route index element={<Dashboard />}/>
+            <Route path="queries-complaints" element={<Queries />}/>
           </Route>
         </Routes>
       </ClerkProvider>
