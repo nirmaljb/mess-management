@@ -5,21 +5,21 @@ export default function Header() {
     const { isSignedIn } = useAuth();
     return (
         <header className="border-b-2">
-            <nav className="flex justify-space cursor-pointer p-2 items-center">
-                <div className="size-14 flex-none">
+            <nav className="flex justify-around cursor-pointer p-5 items-center">
+                <div>
                     <p className="text-md">PU mess</p>
                 </div>
-                <div className="grow size-14 justify-center">
-                    <ul className="flex gap-5 grow">
+                <div>
+                    <ul className="flex space-x-5">
                         <li>Features</li>
                         <li>Pricing</li>
                         <li>Contact Info</li>
                     </ul>
                 </div>
-                {!isSignedIn &&<Link to="/auth" className="size-14 flex-none">
+                {!isSignedIn &&<Link to="/auth">
                     Login
                 </Link>}
-                {isSignedIn && <SignOutButton />}
+                {isSignedIn && <Link to="/student/app">Dashboard</Link>}
             </nav>
         </header>
     )
