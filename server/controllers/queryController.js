@@ -27,9 +27,6 @@ const submitQueries = async (req, res) => {
 const getAllQueries = async (req, res) => {
     try {
         const queries = await prisma.query.findMany({
-            where: {
-                status: "pending"
-            },
             include: {
                user: {
                     select: {
