@@ -5,7 +5,7 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const queryRoutes = require("./routes/queryRoutes");
 const messReductionRoutes = require("./routes/messReductionRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const { PrismaClient } = require("@prisma/client")
 
 const app = express();
@@ -25,7 +25,7 @@ app.use('/admin', adminRoutes);
 
 app.post("/", async (req, res) => {
     const { fullname, email, enrollment_no, dob, phone, course, department, enrolled_year, password, hostel_name, room_no, expected_graduation_year } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    // const hashedPassword = bcrypt.hashSync(password, 10);
     const user = await prisma.user.create({
         data: {
             photo_url: "http://placebear.com/1000/1000",
@@ -48,8 +48,12 @@ app.post("/", async (req, res) => {
 
 app.post("/check", (req, res) => {
     const { password } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 10);
-    res.json({ hashedPassword });
+    // const hashedPassword = bcrypt.hashSync(password, 10);
+    // res.json({ hashedPassword });
+});
+
+app.get("/", (req,res) => {
+    res.json({message: "Hello, World"});
 })
 
 app.listen(PORT, () => {
