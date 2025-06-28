@@ -7,7 +7,7 @@ export default function Header() {
         <header className="border-b-2">
             <nav className="flex justify-around cursor-pointer p-5 items-center">
                 <div>
-                    <p className="text-md">PU mess</p>
+                    <p className="text-md">Mess Master</p>
                 </div>
                 <div>
                     <ul className="flex space-x-5">
