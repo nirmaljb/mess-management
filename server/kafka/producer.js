@@ -2,17 +2,21 @@ const { Kafka } = require('kafkajs')
 
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: ['kafka1:9092', 'kafka2:9092'],
+  brokers: ['localhost:9092', 'localhost:9092'],
 })
 
 const producer = kafka.producer()
 
-await producer.connect()
-await producer.send({
-  topic: 'test-topic',
-  messages: [
-    { value: 'Hello KafkaJS user!' },
-  ],
-})
+const main = async() => {
 
-await producer.disconnect()
+    await producer.connect()
+    await producer.send({
+        topic: 'test-topic',
+        messages: [
+            { value: 'Hello KafkaJS user!' },
+        ],
+    });
+    // await producer.disconnect()
+};
+
+main();
