@@ -8,10 +8,13 @@ const adminRoutes = require("./routes/adminRoutes");
 // const bcrypt = require('bcrypt');
 const { PrismaClient } = require("@prisma/client")
 const { v2: cloudinary } = require('cloudinary');
+const { requireAuth, clerkMiddleware, getAuth } = require('@clerk/express')
+
 
 const app = express();
 const prisma = new PrismaClient();
 
+app.use(clerkMiddleware());
 app.use(cors());
 app.use(express.json());
 
@@ -63,7 +66,7 @@ app.use('/admin', adminRoutes);
     });
     
     console.log(autoCropUrl);    
-})();
+});
 
 
 app.post("/", async (req, res) => {
@@ -89,11 +92,22 @@ app.post("/", async (req, res) => {
     res.json(user);
 });
 
-app.post("/check", (req, res) => {
+app.get("/protected", requireAuth(), (req, res) => {
     const { password } = req.body;
+
+    res.json({message: 'this is a protected route'})
     // const hashedPassword = bcrypt.hashSync(password, 10);
     // res.json({ hashedPassword });
 });
+
+app.get('/protected2', (req, res) => {
+    const auth = getAuth(req);
+    console.log(auth);
+    if(!auth.userId) {
+        return res.status(401).json({message: 'UnAuthorized access'});
+    }
+    res.json({message: 'Hello, Protected Person!'});
+})
 
 app.get("/", (req,res) => {
     res.json({message: "Hello, World"});
