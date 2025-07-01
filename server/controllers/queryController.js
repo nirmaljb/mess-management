@@ -3,15 +3,15 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 const submitQueries = async (req, res) => {
-    const { subject, category, message, enrollment_no } = req.body;
-    
+    const { subject, category, description, image, enrollment_no } = req.body;
+    // console.log(req.body);
     try {
 
         const query = await prisma.query.create({
             data: {
                 enrollment_no,
                 category,
-                query: message.trim(),
+                query: description.trim(),
                 subject: subject
             }
         });

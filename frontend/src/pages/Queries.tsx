@@ -57,18 +57,30 @@ export default function Queries() {
     defaultValues: {
       subject: "",
       description: "",
-      category: "",
+      category: "food_quality",
       image: ""
     },
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
     console.log(file);
     form.reset();
+
+    const response = await fetch('http://localhost:8000/query/queries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({...values, enrollment_no: '24BTCSEPY0005'})
+    });
+
+    const result = await response.json();
+    console.log(result);
+
   }
 
   return (
@@ -103,7 +115,7 @@ export default function Queries() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="food_quality">Food Quality</SelectItem>
+                  <SelectItem value="food_quality" defaultChecked>Food Quality</SelectItem>
                   <SelectItem value="staff">Staff</SelectItem>
                   <SelectItem value="fee_payment">Fee Payment</SelectItem>
                   <SelectItem value="others">Others</SelectItem>
